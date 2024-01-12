@@ -1,15 +1,8 @@
 import { Button } from "@/components";
 import { auth, provider } from "@/app/firebase/config";
 import { signInWithPopup } from "firebase/auth";
-import { useState } from "react";
 
 const Start = () => {
-  const [user, setUser] = useState("");
-  const handleLogin = async () => {
-    "use server";
-    signInWithPopup(auth, provider).then((data) => {});
-  };
-
   return (
     <div className="p-10 font-sans flex flex-col justify-between gap-44">
       <div>
@@ -23,7 +16,7 @@ const Start = () => {
           and investments.
         </p>
       </div>
-      <Button title="Get Started" handleClick={handleLogin} />
+      <Button title="Get Started" />
     </div>
   );
 };
