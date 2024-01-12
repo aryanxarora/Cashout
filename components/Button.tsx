@@ -1,11 +1,18 @@
-"use client"
-import { Button } from '@/types'
-import React from 'react'
+"use client";
+import { ButtonProps } from "@/types";
+import React from "react";
 
-const Button = ({ title, styles, handleClick }: Button) => {
+const Button = ({ title, styles, handleClick }: ButtonProps) => {
   return (
-    <button onClick={handleClick} className={`btn-primary ${styles}`}>{ title }</button>
-  )
-}
+    <button
+      disabled={false}
+      type={"button"}
+      className={`btn-primary ${styles}`}
+      onClick={handleClick}
+    >
+      {title}
+    </button>
+  );
+};
 
-export default Button
+export default Button;

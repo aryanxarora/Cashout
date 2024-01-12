@@ -1,4 +1,4 @@
 import Button from "./Button";
-import Start from "./Start";
+import Dashboard from "./dashboard/Dashboard";
 
-export { Button, Start };
+export { Button, Dashboard };
