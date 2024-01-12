@@ -19,13 +19,8 @@ export default function Home() {
 
   return (
     <main>
-      <div className="hidden sm:block">
-        Cashout is currently only available on Mobile
-      </div>
-      <div className="sm:hidden">
-        <h1>Dashboard</h1>
-        <button onClick={handleSignOut}>Sign Out</button>
-      </div>
+      <h1>Dashboard</h1>
+      <button onClick={handleSignOut}>Sign Out</button>
     </main>
   );
 }
