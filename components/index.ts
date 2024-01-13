@@ -1,4 +1,5 @@
 import Button from "./Button";
-import Dashboard from "./dashboard/Dashboard";
+import Navigation from "./Navigation";
+import DashboardChart from "./DashboardChart";
 
-export { Button, Dashboard };
+export { Button, Navigation, DashboardChart };

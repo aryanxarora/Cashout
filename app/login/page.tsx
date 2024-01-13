@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Dashboard } from "@/components";
+import { Button } from "@/components";
 import { auth, provider } from "@/app/firebase/config";
 import { signInWithPopup } from "firebase/auth";
 import { useEffect, useState } from "react";
@@ -13,10 +13,12 @@ const Start = () => {
   const handleClick = () => {
     signInWithPopup(auth, provider).then((data) => {
       if (data) {
+        console.log(data);
         setCookie("uid", data.user.uid || "");
         setCookie("name", data.user.displayName || "");
         setCookie("email", data.user.email || "");
         setCookie("photo", data.user.photoURL || "");
+        setCookie("nav", "home");
         router.push("/");
       }
     });

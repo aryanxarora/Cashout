@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["cdn.worldvectorlogo.com", "upload.wikimedia.org"],
+    domains: ["lh3.googleusercontent.com"],
   },
+  transpilePackages: ["@mui/x-charts"],
 };
 
 module.exports = nextConfig;
