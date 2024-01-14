@@ -30,9 +30,9 @@ export const budgetSlice = createSlice({
     setYear: (state, action: PayloadAction<Month[]>) => {
       state.year = action.payload;
     },
-    setBudget: (state, action: PayloadAction<BudgetState>) => {
-      state = action.payload;
-    },
+    // setBudget: (state, action: PayloadAction<BudgetState>) => {
+    //   state = action.payload;
+    // },
     setMonth: (state, action: PayloadAction<Month>) => {
       state.year.push(action.payload);
     },
