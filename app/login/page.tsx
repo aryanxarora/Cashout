@@ -1,11 +1,12 @@
 "use client";
 
 import { Button } from "@/components";
-import { auth, provider } from "@/app/firebase/config";
+import { auth, provider, db } from "@/app/firebase/config";
 import { signInWithPopup } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
+import { checkDocExists } from "@/app/firebase/functions";
 
 const Start = () => {
   const router = useRouter();
@@ -19,17 +20,47 @@ const Start = () => {
         setCookie("email", data.user.email || "");
         setCookie("photo", data.user.photoURL || "");
         setCookie("nav", "home");
+        const userData = checkDocExists(data.user.uid);
         router.push("/");
       }
     });
   };
 
+  useEffect(() => {
+    if (getCookie("uid")) {
+      router.push("/");
+    }
+  }, []);
+
+  // Set height of screen
+  const setHeight = () => {
+    const screenElement = document.getElementById("screen");
+    if (screenElement) {
+      screenElement.style.minHeight = window.innerHeight + "px";
+    }
+  };
+  let deviceWidth = window.matchMedia("(max-width: 1024px)");
+  if (deviceWidth.matches) {
+    window.addEventListener("resize", setHeight);
+    setHeight();
+  }
+  useEffect(() => {
+    setHeight();
+    window.addEventListener("load", setHeight);
+    return () => {
+      window.removeEventListener("load", setHeight);
+    };
+  }, []);
+
   return (
     <div>
-      <div className="p-10 font-sans flex flex-col justify-between gap-44">
+      <div
+        id="screen"
+        className="p-10 font-sans flex flex-col justify-between bg-slate-950"
+      >
         <div>
-          <h1 className="text-2xl font-bold my-5">cashout.</h1>
-          <h1 className="text-5xl leading-tight my-10">
+          <h1 className="text-2xl text-white font-bold my-5">cashout.</h1>
+          <h1 className="text-5xl leading-tight my-10 text-white">
             Income tracking and fund allocation
           </h1>
           <p className="text-gray-400">
@@ -38,7 +69,7 @@ const Start = () => {
             savings, and investments.
           </p>
         </div>
-        <Button title="Get Started" handleClick={handleClick} />
+        <Button title="Get Started" handleClick={handleClick} styles="mt-20" />
       </div>
     </div>
   );

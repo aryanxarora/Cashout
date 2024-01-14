@@ -1,5 +1,19 @@
 import Button from "./Button";
 import Navigation from "./Navigation";
-import DashboardChart from "./DashboardChart";
+import DashLineChart from "./DashLineChart";
+import Dashboard from "./Dashboard";
+import Budget from "./Budget";
+import User from "./User";
+import Loading from "./Loading";
+import DashAreaChart from "./DashAreaChart";
 
-export { Button, Navigation, DashboardChart };
+export {
+  Button,
+  Navigation,
+  DashLineChart,
+  Dashboard,
+  Budget,
+  User,
+  Loading,
+  DashAreaChart,
+};
