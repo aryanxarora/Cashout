@@ -20,7 +20,7 @@ const Start = () => {
         setCookie("email", data.user.email || "");
         setCookie("photo", data.user.photoURL || "");
         setCookie("nav", "home");
-        const userData = checkDocExists(data.user.uid);
+        checkDocExists(data.user.uid);
         router.push("/");
       }
     });
@@ -32,31 +32,11 @@ const Start = () => {
     }
   }, []);
 
-  // Set height of screen
-  const setHeight = () => {
-    const screenElement = document.getElementById("screen");
-    if (screenElement) {
-      screenElement.style.minHeight = window.innerHeight + "px";
-    }
-  };
-  let deviceWidth = window.matchMedia("(max-width: 1024px)");
-  if (deviceWidth.matches) {
-    window.addEventListener("resize", setHeight);
-    setHeight();
-  }
-  useEffect(() => {
-    setHeight();
-    window.addEventListener("load", setHeight);
-    return () => {
-      window.removeEventListener("load", setHeight);
-    };
-  }, []);
-
   return (
     <div>
       <div
         id="screen"
-        className="p-10 font-sans flex flex-col justify-between bg-slate-950"
+        className="p-10 font-sans flex flex-col justify-between bg-slate-950 min-h-screen h-auto"
       >
         <div>
           <h1 className="text-2xl text-white font-bold my-5">cashout.</h1>
