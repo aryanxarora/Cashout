@@ -1,11 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Allocation, Expenses, Month } from "@/types";
-
-export interface BudgetState {
-  allocation: Allocation;
-  expenses: Expenses;
-  year: Month[];
-}
+import { BudgetState } from "@/types";
 
 const initialState: BudgetState = {
   allocation: {
@@ -20,21 +14,8 @@ const initialState: BudgetState = {
 export const budgetSlice = createSlice({
   name: "budget",
   initialState,
-  reducers: {
-    setAllocation: (state, action: PayloadAction<Allocation>) => {
-      state.allocation = action.payload;
-    },
-    setExpenses: (state, action: PayloadAction<Expenses>) => {
-      state.expenses = action.payload;
-    },
-    setYear: (state, action: PayloadAction<Month[]>) => {
-      state.year = action.payload;
-    },
-    // setBudget: (state, action: PayloadAction<BudgetState>) => {
-    //   state = action.payload;
-    // },
-    setMonth: (state, action: PayloadAction<Month>) => {
-      state.year.push(action.payload);
-    },
-  },
+  reducers: {},
 });
+
+export const {} = budgetSlice.actions;
+export default budgetSlice.reducer;

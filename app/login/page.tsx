@@ -1,12 +1,11 @@
 "use client";
 
 import { Button } from "@/components";
-import { auth, provider, db } from "@/app/firebase/config";
+import { auth, provider } from "@/app/firebase/config";
 import { signInWithPopup } from "firebase/auth";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getCookie, setCookie } from "cookies-next";
-import { checkDocExists } from "@/app/firebase/functions";
 
 const Start = () => {
   const router = useRouter();
@@ -20,7 +19,6 @@ const Start = () => {
         setCookie("email", data.user.email || "");
         setCookie("photo", data.user.photoURL || "");
         setCookie("nav", "home");
-        checkDocExists(data.user.uid);
         router.push("/");
       }
     });

@@ -44,7 +44,7 @@ export default function Home() {
   return (
     <main id="screen" className="bg-slate-950 min-h-screen h-auto relative">
       {loading ? (
-        <Loading />
+        <Loading styles="h-screen" />
       ) : (
         <div>
           {nav === "home" ? (

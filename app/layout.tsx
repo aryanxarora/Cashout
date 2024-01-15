@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import StoreProvider from "./StoreProvider";
 
 export const metadata: Metadata = {
   title: "Cashout",
@@ -18,7 +19,9 @@ export default function RootLayout({
         <div className="hidden sm:block">
           Cashout is currently only available on Mobile
         </div>
-        <div className="sm:hidden">{children}</div>
+        <div className="sm:hidden">
+          <StoreProvider children={children} />
+        </div>
         {/* <Footer /> */}
       </body>
     </html>

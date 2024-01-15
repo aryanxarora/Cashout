@@ -21,3 +21,9 @@ export interface Month {
   savings: number;
   investments: number;
 }
+
+export interface BudgetState {
+  allocation: Allocation;
+  expenses: Expenses;
+  year: Month[];
+}

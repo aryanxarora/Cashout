@@ -1,8 +1,8 @@
 import React from "react";
 
-const Loading = () => {
+const Loading = ({ styles }: { styles?: string }) => {
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className={`w-full flex justify-center items-center ${styles}`}>
       <svg
         className="animate-spin -ml-1 mr-3 h-5 w-5 text-lime-500"
         xmlns="http://www.w3.org/2000/svg"

@@ -19,7 +19,7 @@ export default function User() {
       <div id="container" className="p-5">
         <h1 className="text-sm text-slate-500">{getCookie("name")}</h1>
         <h1 className="text-2xl text-white">User Settings</h1>
-        <Button title="Sign Out" handleClick={handleSignOut} />
+        <Button title="Sign Out" handleClick={handleSignOut} styles="mt-10" />
       </div>
     </main>
   );

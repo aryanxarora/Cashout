@@ -1,5 +1,3 @@
-import { Navigation } from "@/components";
-
 export default function Budget() {
   return (
     <main id="screen" className="bg-slate-950 relative font-head">

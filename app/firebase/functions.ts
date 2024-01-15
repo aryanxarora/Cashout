@@ -1,6 +1,8 @@
 import { collection, getDocs, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "@/app/firebase/config";
 
+const currentYear = new Date().getFullYear();
+
 export const checkDocExists = async (uid: string) => {
   const docRef = doc(db, "users", uid);
   const docSnap = await getDoc(docRef);
@@ -16,7 +18,6 @@ export const checkDocExists = async (uid: string) => {
 
 export const addNewUser = async (uid: string) => {
   const currentMonth = new Date().getMonth() + 1;
-  const currentYear = new Date().getFullYear();
   const data = {
     allocation: {
       allowance: 20,
@@ -25,45 +26,19 @@ export const addNewUser = async (uid: string) => {
     },
     expenes: {},
     [currentYear]: {
-      1: {
+      0: {
+        name: "",
+        income: 0,
+        allowance: 0,
+        savings: 0,
+        investments: 0,
+      },
+      [currentMonth]: {
         name: "Jan",
-        income: 1611.9,
-        allowance: 110.4,
-        savings: 353.53,
-        investments: 707.06,
-      },
-      2: {
-        name: "Feb",
-      },
-      3: {
-        name: "Mar",
-      },
-      4: {
-        name: "Apr",
-      },
-      5: {
-        name: "May",
-      },
-      6: {
-        name: "Jun",
-      },
-      7: {
-        name: "Jul",
-      },
-      8: {
-        name: "Aug",
-      },
-      9: {
-        name: "Sep",
-      },
-      10: {
-        name: "Oct",
-      },
-      11: {
-        name: "Nov",
-      },
-      12: {
-        name: "Dec",
+        income: 0,
+        allowance: 0,
+        savings: 0,
+        investments: 0,
       },
     },
   };
