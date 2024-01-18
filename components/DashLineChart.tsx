@@ -12,9 +12,19 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Loading } from "@/components";
+import { useAppSelector } from "@/lib/hooks";
 
 const DashboardChart = () => {
   const [loading, setLoading] = useState<boolean>(true);
+  const logs = useAppSelector((state) => state.budget.logs);
+  useEffect(() => {
+    if (logs.length > 0) {
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+    console.log("log check", logs);
+  }, logs);
 
   return (
     <ResponsiveContainer
@@ -25,7 +35,7 @@ const DashboardChart = () => {
       {loading ? (
         <Loading styles="h-full pl-5" />
       ) : (
-        <LineChart data={[]} margin={{ right: 30 }}>
+        <LineChart data={logs} margin={{ right: 30 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />

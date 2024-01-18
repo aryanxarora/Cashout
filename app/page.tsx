@@ -1,6 +1,6 @@
 "use client";
 import { Navigation, Dashboard, Loading, Budget, User } from "@/components";
-import { getCookie } from "cookies-next";
+import { getCookie, hasCookie } from "cookies-next";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -29,7 +29,7 @@ export default function Home() {
 
   const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
-    if (getCookie("uid") && loading) {
+    if (hasCookie("uid") && loading) {
       setLoading(false);
     } else {
       router.push("/login");

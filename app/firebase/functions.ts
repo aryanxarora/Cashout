@@ -1,46 +1,49 @@
-import { collection, getDocs, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  setDoc,
+  Timestamp,
+} from "firebase/firestore";
 import { db } from "@/app/firebase/config";
+import { BudgetState } from "@/types";
 
-const currentYear = new Date().getFullYear();
-
-export const checkDocExists = async (uid: string) => {
+export const getUserData = async (uid: string) => {
   const docRef = doc(db, "users", uid);
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    console.log(docSnap.data());
     return docSnap.data();
   } else {
-    addNewUser(uid);
     return null;
   }
 };
 
 export const addNewUser = async (uid: string) => {
-  const currentMonth = new Date().getMonth() + 1;
-  const data = {
+  const data: BudgetState = {
     allocation: {
       allowance: 20,
       savings: 40,
       investments: 40,
     },
-    expenes: {},
-    [currentYear]: {
-      0: {
-        name: "",
+    expenses: {},
+    logs: [
+      {
+        date: new Timestamp(0, 0),
         income: 0,
         allowance: 0,
         savings: 0,
         investments: 0,
       },
-      [currentMonth]: {
-        name: "Jan",
-        income: 0,
+      {
+        date: Timestamp.now(),
+        income: 1000.0,
         allowance: 0,
         savings: 0,
         investments: 0,
       },
-    },
+    ],
   };
   await setDoc(doc(db, "users", uid), data);
 };

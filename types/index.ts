@@ -1,4 +1,5 @@
 import { MouseEventHandler } from "react";
+import { Timestamp } from "firebase/firestore";
 
 export interface ButtonProps {
   title: string;
@@ -14,8 +15,8 @@ export interface Allocation {
 
 export interface Expenses {}
 
-export interface Month {
-  name: string;
+export interface MonthlyLog {
+  date: Timestamp;
   income: number;
   allowance: number;
   savings: number;
@@ -25,5 +26,5 @@ export interface Month {
 export interface BudgetState {
   allocation: Allocation;
   expenses: Expenses;
-  year: Month[];
+  logs: MonthlyLog[];
 }
