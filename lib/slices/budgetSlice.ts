@@ -18,7 +18,7 @@ const initialState: BudgetState = {
       date: Timestamp.now(),
       income: [
         {
-          name: "default",
+          source: "default",
           amount: 0,
           date: Timestamp.now(),
         },
@@ -33,10 +33,7 @@ const initialState: BudgetState = {
 export const budgetSlice = createSlice({
   name: "budget",
   initialState,
-  reducers: {
-    initBudget: (state, action: PayloadAction<BudgetState>) => {},
-  },
+  reducers: {},
 });
 
-export const { initBudget } = budgetSlice.actions;
 export default budgetSlice.reducer;
