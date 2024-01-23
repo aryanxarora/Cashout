@@ -1,31 +1,18 @@
 "use client";
-import { Navigation, Dashboard, Loading, Budget, User } from "@/components";
-import { getCookie, hasCookie } from "cookies-next";
+import {
+  Navigation,
+  Dashboard,
+  Loading,
+  Budget,
+  User,
+  Logger,
+} from "@/components";
+import { hasCookie } from "cookies-next";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
-
-  // Set height of screen
-  // const setHeight = () => {
-  //   const screenElement = document.getElementById("screen");
-  //   if (screenElement) {
-  //     screenElement.style.minHeight = window.innerHeight + "px";
-  //   }
-  // };
-  // let deviceWidth = window.matchMedia("(max-width: 1024px)");
-  // if (deviceWidth.matches) {
-  //   window.addEventListener("resize", setHeight);
-  //   setHeight();
-  // }
-  // useEffect(() => {
-  //   setHeight();
-  //   window.addEventListener("load", setHeight);
-  //   return () => {
-  //     window.removeEventListener("load", setHeight);
-  //   };
-  // }, []);
 
   const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
@@ -51,8 +38,10 @@ export default function Home() {
             <Dashboard />
           ) : nav === "budget" ? (
             <Budget />
-          ) : (
+          ) : nav == "user" ? (
             <User />
+          ) : (
+            <Logger />
           )}
           <div className="w-full h-16"></div>
           <Navigation handleNav={handleNav} />

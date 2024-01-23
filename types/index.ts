@@ -13,18 +13,32 @@ export interface Allocation {
   investments: number;
 }
 
-export interface Expenses {}
+export interface expenses {
+  name: string;
+  amount: number;
+}
 
-export interface MonthlyLog {
+export interface Config {
+  expenses: expenses[];
+  allocation: Allocation;
+}
+
+export interface Income {
+  source: string;
+  amount: number;
   date: Timestamp;
-  income: number;
+}
+
+export interface History {
+  date: Timestamp;
+  income: Income[];
   allowance: number;
   savings: number;
   investments: number;
 }
 
 export interface BudgetState {
-  allocation: Allocation;
-  expenses: Expenses;
-  logs: MonthlyLog[];
+  config: Config;
+  income: Income[];
+  history: History[];
 }

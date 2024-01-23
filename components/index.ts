@@ -6,6 +6,7 @@ import Budget from "./Budget";
 import User from "./User";
 import Loading from "./Loading";
 import DashAreaChart from "./DashAreaChart";
+import Logger from "./Logger";
 
 export {
   Button,
@@ -16,4 +17,5 @@ export {
   User,
   Loading,
   DashAreaChart,
+  Logger,
 };

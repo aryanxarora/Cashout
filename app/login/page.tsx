@@ -34,7 +34,7 @@ const Start = () => {
     <div>
       <div
         id="screen"
-        className="p-10 font-sans flex flex-col justify-between bg-slate-950 min-h-screen h-auto"
+        className="p-10 font-sans flex flex-col bg-slate-950 min-h-screen h-auto"
       >
         <div>
           <h1 className="text-2xl text-white font-bold my-5">cashout.</h1>

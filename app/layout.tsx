@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body suppressHydrationWarning={true}>
         {/* <Navbar /> */}
         <div className="hidden sm:block">
           Cashout is currently only available on Mobile
