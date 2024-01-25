@@ -12,10 +12,36 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Loading } from "@/components";
-import { useAppSelector } from "@/lib/hooks";
+import { BudgetState, History, Income } from "@/types";
+import { Timestamp } from "firebase/firestore";
+import { type } from "os";
 
-const DashboardChart = () => {
+const DashboardChart = ({ data }: { data: BudgetState }) => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [chartData, setChartData] = useState<History[]>([]);
+
+  useEffect(() => {
+    data.history.forEach((item) => {
+      item.total = item.income.reduce((acc: number, curr: Income) => {
+        return (acc += curr.amount);
+      }, 0);
+    });
+
+    const currentData: History = {
+      date: Timestamp.now(),
+      income: data.income,
+      allowance: 100,
+      savings: 200,
+      investments: 300,
+      total: data.income.reduce((acc: number, curr: Income) => {
+        return (acc += curr.amount);
+      }, 0),
+    };
+
+    setChartData([...data.history, currentData]);
+  }, []);
+
+  console.log("data", chartData);
 
   return (
     <ResponsiveContainer
@@ -26,16 +52,43 @@ const DashboardChart = () => {
       {loading ? (
         <Loading styles="h-full pl-5" />
       ) : (
-        <LineChart data={[]} margin={{ right: 30 }}>
+        <LineChart data={chartData} margin={{ right: 30 }}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey="date" />
           <YAxis />
-          <Tooltip content={() => <div></div>} />
+          <Tooltip
+            // content={() => (
+            //   <div className="bg-slate-800 rounded-xl p-2 text-slate-500">
+            //     amount
+            //   </div>
+            // )}
+            content={({ active, payload }) => {
+              if (active && payload && payload.length) {
+                const data = payload.find((p) => p.dataKey === "total");
+
+                return (
+                  <div className="bg-slate-800 rounded-xl p-2 text-slate-500">
+                    {data ? `Total: $${data.value}` : "No data"}
+                    <br />
+                    {payload[0].payload.date
+                      .toDate()
+                      .toLocaleString("default", {
+                        month: "long",
+                        year: "numeric",
+                      })}
+                  </div>
+                );
+              }
+
+              return null;
+            }}
+          />
           <Legend />
+          <Line type="monotone" dataKey="total" stroke="#8884d8" dot={false} />
           <Line
             type="monotone"
             dataKey="allowance"
-            stroke="#8884d8"
+            stroke="#FF6961"
             dot={false}
           />
           <Line

@@ -6,25 +6,28 @@ import { getCookie } from "cookies-next";
 import { newIncomeLog } from "@/app/firebase/functions";
 
 const Logger = () => {
-  console.log("Logger Called");
   const [amount, setAmount] = useState("");
   const [source, setSource] = useState("");
   const [status, setStatus] = useState(0);
 
   const handleLog = () => {
-    const log: Income = {
-      amount: parseInt(amount),
-      source: source,
-      date: Timestamp.now(),
-    };
-    const uid = getCookie("uid");
-    newIncomeLog(uid || "", log)
-      .then(() => {
-        setStatus(1);
-      })
-      .catch(() => {
-        setStatus(2);
-      });
+    if (amount == "" || source == "") {
+      setStatus(2);
+    } else {
+      const log: Income = {
+        amount: parseInt(amount),
+        source: source,
+        date: Timestamp.now(),
+      };
+      const uid = getCookie("uid");
+      newIncomeLog(uid || "", log)
+        .then(() => {
+          setStatus(1);
+        })
+        .catch(() => {
+          setStatus(2);
+        });
+    }
   };
 
   return (

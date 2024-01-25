@@ -4,6 +4,11 @@ import React from "react";
 const LogList = ({ income }: { income: Income[] }) => {
   return (
     <div>
+      {income.length === 0 ? null : (
+        <h1 className="text-white mt-10 mb-5 text-lg font-semibold">
+          This Month
+        </h1>
+      )}
       {income
         .sort(
           (a: Income, b: Income) =>
@@ -15,7 +20,7 @@ const LogList = ({ income }: { income: Income[] }) => {
             className="text-white flex w-full bg-slate-800 justify-between p-5 rounded-xl mt-2 items-center"
           >
             <div>
-              <p className="text-sm text-slate-400">
+              <p className="text-xs text-slate-400">
                 {(() => {
                   const itemDate = item.date.toDate();
                   const today = new Date();

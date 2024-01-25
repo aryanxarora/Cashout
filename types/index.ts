@@ -35,6 +35,7 @@ export interface History {
   allowance: number;
   savings: number;
   investments: number;
+  total: number;
 }
 
 export interface BudgetState {

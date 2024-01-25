@@ -44,6 +44,26 @@ export const addNewUser = async (uid: string) => {
         allowance: 0,
         savings: 0,
         investments: 0,
+        total: 0,
+      },
+      {
+        date: new Timestamp(0, 0),
+        income: [
+          {
+            source: "Martini Vispak",
+            amount: 2520,
+            date: new Timestamp(0, 0),
+          },
+          {
+            source: "Francization",
+            amount: 336,
+            date: new Timestamp(0, 0),
+          },
+        ],
+        allowance: 0,
+        savings: 0,
+        investments: 0,
+        total: 0,
       },
     ],
   };

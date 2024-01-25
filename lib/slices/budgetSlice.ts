@@ -26,6 +26,7 @@ const initialState: BudgetState = {
       allowance: 0,
       savings: 0,
       investments: 0,
+      total: 0,
     },
   ],
 };

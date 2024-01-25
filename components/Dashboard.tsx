@@ -7,7 +7,6 @@ import { getUserData, addNewUser } from "@/app/firebase/functions";
 import { BudgetState, Income } from "@/types";
 
 export default function Dashboard() {
-  console.log("Dashboard Called");
   const [data, setData] = useState<BudgetState>();
   const [income, setIncome] = useState([]);
 
@@ -56,15 +55,18 @@ export default function Dashboard() {
       </div>
       <h1 className="mt-8 text-xl text-white">Income Earned</h1>
       <h1 className="font-bold text-3xl text-slate-300">
-        ${data?.income.reduce((a, b) => a + b.amount, 0).toFixed(2)}
+        $
+        {data?.income
+          .reduce((a, b) => a + b.amount, 0)
+          .toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
       </h1>
-      <h1 className="text-white mt-10 mb-5 text-lg font-semibold">Overview</h1>
+      <h1 className="text-white mt-7 mb-5 text-lg font-semibold">Overview</h1>
       <div className="w-full bg-slate-900 rounded-xl min-h-72 h-96 p-5 pl-0">
-        <DashLineChart />
+        {data && <DashLineChart data={data} />}
       </div>
-      <h1 className="text-white mt-10 mb-5 text-lg font-semibold">
-        This Month
-      </h1>
       <LogList income={income} />
     </div>
   );
