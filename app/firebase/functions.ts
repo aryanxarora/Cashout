@@ -70,24 +70,6 @@ export const addNewUser = async (uid: string) => {
   await setDoc(doc(db, "users", uid), data);
 };
 
-// export const logNewIncome = async (
-//   log: IncomeLog,
-//   uid: string,
-//   key: number
-// ) => {
-//   const userRef = doc(db, "users", uid);
-//   const userSnap = (await getDoc(userRef)).data();
-//   const logsUpdate = userSnap?.logs;
-//   logsUpdate[key].income.push(log);
-//   await updateDoc(userRef, { logs: logsUpdate })
-//     .then(() => {
-//       console.log("Document successfully updated!");
-//     })
-//     .catch((error) => {
-//       console.error("Error updating document: ", error);
-//     });
-// };
-
 export const newIncomeLog = async (uid: string, log: Income) => {
   const userRef = doc(db, "users", uid);
   const userSnap = (await getDoc(userRef)).data();

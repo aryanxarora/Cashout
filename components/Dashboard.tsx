@@ -15,7 +15,6 @@ export default function Dashboard() {
     const dataHandler = async () => {
       const data = await getUserData(uid || "");
       if (data !== null) {
-        console.log(data);
         setData(data as BudgetState);
         setIncome(data.income);
         return !null;
@@ -28,7 +27,6 @@ export default function Dashboard() {
       if (data === null) {
         addNewUser(uid || "").then(() => {
           getUserData(uid || "").then((data) => {
-            console.log(data);
             setData(data as BudgetState);
           });
         });

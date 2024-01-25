@@ -63,7 +63,7 @@ const Logger = () => {
         <input
           type="text"
           className="w-full text-white bg-slate-800 py-5 px-5 rounded-xl ring-0 focus:ring-0 focus:outline-none"
-          placeholder="YouTube Sponsorship – Notion"
+          placeholder="Brand Deal"
           value={source}
           onChange={(e) => setSource(e.target.value)}
         />

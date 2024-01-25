@@ -41,8 +41,6 @@ const DashboardChart = ({ data }: { data: BudgetState }) => {
     setChartData([...data.history, currentData]);
   }, []);
 
-  console.log("data", chartData);
-
   return (
     <ResponsiveContainer
       width="100%"
@@ -57,11 +55,6 @@ const DashboardChart = ({ data }: { data: BudgetState }) => {
           <XAxis dataKey="date" />
           <YAxis />
           <Tooltip
-            // content={() => (
-            //   <div className="bg-slate-800 rounded-xl p-2 text-slate-500">
-            //     amount
-            //   </div>
-            // )}
             content={({ active, payload }) => {
               if (active && payload && payload.length) {
                 const data = payload.find((p) => p.dataKey === "total");
