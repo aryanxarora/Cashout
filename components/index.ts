@@ -7,6 +7,7 @@ import User from "./User";
 import Loading from "./Loading";
 import DashAreaChart from "./DashAreaChart";
 import Logger from "./Logger";
+import LogList from "./LogList";
 
 export {
   Button,
@@ -18,4 +19,5 @@ export {
   Loading,
   DashAreaChart,
   Logger,
+  LogList,
 };
