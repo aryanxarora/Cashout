@@ -46,7 +46,7 @@ export default function Dashboard() {
             className="rounded-full ring-lime-500 ring-2"
           />
           <div>
-            <h1 className="text-sm text-slate-500">Cashout</h1>
+            <h1 className="text-sm text-slate-500">Cash Compass</h1>
             <h1 className="text-white">{getCookie("name")}</h1>
           </div>
         </div>
