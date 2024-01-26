@@ -7,7 +7,7 @@ import {
   arrayUnion,
 } from "firebase/firestore";
 import { db } from "@/app/firebase/config";
-import { BudgetState, Income } from "@/types";
+import { Allocation, BudgetState, Config, Income } from "@/types";
 
 export const getUserData = async (uid: string) => {
   const docRef = doc(db, "users", uid);
@@ -83,3 +83,16 @@ export const newIncomeLog = async (uid: string, log: Income) => {
       console.error("Error updating document: ", error);
     });
 };
+
+export const setAllocationConfig = async (uid: string, config: Allocation) => {
+  const userRef = doc(db, "users", uid);
+  const userSnap = (await getDoc(userRef)).data();
+  const putConfig: Config = userSnap?.config;
+  putConfig.allocation = config;
+  await updateDoc(userRef, { config: putConfig })
+  .then(() => {
+    console.log("Document successfully updated!");
+  }).catch((error) => {
+    console.error("Error updating document: ", error);
+  });
+}

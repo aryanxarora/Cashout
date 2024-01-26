@@ -1,10 +1,9 @@
 "use client";
 import { getCookie } from "cookies-next";
-import { DashLineChart, LogList, Logger } from "@/components";
+import { DashLineChart, LogList } from "@/components";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { getUserData, addNewUser } from "@/app/firebase/functions";
-import { BudgetState, Income } from "@/types";
+import { BudgetState } from "@/types";
 
 export default function Dashboard() {
   const [data, setData] = useState<BudgetState>();
