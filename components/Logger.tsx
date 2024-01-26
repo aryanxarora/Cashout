@@ -6,19 +6,20 @@ import { getCookie } from "cookies-next";
 import { newIncomeLog } from "@/app/firebase/functions";
 
 const Logger = () => {
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(0);
   const [source, setSource] = useState("");
   const [status, setStatus] = useState(0);
+  const [incomeInvalid, setIncomeInvalid] = useState<boolean>(false);
   const [expenseAmount, setExpenseAmount] = useState<number>(0);
   const [expenseInvalid, setExpenseInvalid] = useState<boolean>(false);
   const [expense, setExpense] = useState<string>("");
 
   const handleLog = () => {
-    if (amount == "" || source == "") {
+    if (amount == 0 || source == "") {
       setStatus(2);
     } else {
       const log: Income = {
-        amount: parseInt(amount),
+        amount: amount,
         source: source,
         date: Timestamp.now(),
       };
@@ -46,7 +47,7 @@ const Logger = () => {
         <h1 className="text-sm text-slate-500">Monthly Income</h1>
         <h1 className="text-2xl text-white">Log Cash In</h1>
 
-        {/* {status == 0 ? (
+        {status == 0 ? (
           <h1></h1>
         ) : status == 1 ? (
           <h1 className="rounded-xl border-2 border-lime-500 mt-10 py-4 px-3 w-full text-lime-500">
@@ -57,7 +58,7 @@ const Logger = () => {
             Error! Unable to log income.
           </h1>
         )}
-
+        {/*
         <h1 className="text-white mt-10 mb-4">Amount</h1>
         <div className="bg-slate-800 flex justify-center items-center py-5 px-5 rounded-xl text-lg text-white border-0">
           <h1 className="mr-5">$</h1>
@@ -83,22 +84,23 @@ const Logger = () => {
         >
           Log
         </button> */}
+        {/* INCOME LOGGER */}
         <div>
           <h1 className="text-white mt-10 mb-5 text-lg font-semibold">
             Income
           </h1>
           <div
-            className={`flex justify-center items-center rounded-xl ${
-              expenseInvalid ? "ring-2 ring-red-500" : ""
+            className={`flex justify-center items-center ${
+              expenseInvalid ? "ring-2 ring-red-500 rounded-lg" : ""
             }`}
           >
             <input
               type="text"
-              className="bg-slate-800 py-5 rounded-l-xl w-3/6 px-4 text-white ring-0 focus:ring-0 focus:outline-none"
+              className="bg-slate-800 py-5 w-3/6 px-4 rounded-l-lg text-white ring-0 focus:ring-0 focus:outline-none"
               placeholder="Brand Deal"
               onChange={(e) => {
-                setExpense(e.target.value);
-                setExpenseInvalid(false);
+                setSource(e.target.value);
+                setIncomeInvalid(false);
               }}
             />
             <input
@@ -107,12 +109,12 @@ const Logger = () => {
               placeholder="2000"
               min={0}
               onChange={(e) => {
-                setExpenseAmount(parseInt(e.target.value));
-                setExpenseInvalid(false);
+                setAmount(parseInt(e.target.value));
+                setIncomeInvalid(false);
               }}
             />
             <button
-              className="bg-slate-900 py-5 rounded-r-xl w-1/6 flex justify-center"
+              className="bg-slate-900 py-5 w-1/6 flex justify-center rounded-r-lg"
               onClick={handleLog}
             >
               <svg
@@ -132,18 +134,20 @@ const Logger = () => {
             </button>
           </div>
         </div>
+
+        {/* EXPENSE LOGGER */}
         <div>
           <h1 className="text-white mt-10 mb-5 text-lg font-semibold">
             Expenses
           </h1>
           <div
-            className={`flex justify-center items-center rounded-xl ${
-              expenseInvalid ? "ring-2 ring-red-500" : ""
+            className={`flex justify-center items-center ${
+              expenseInvalid ? "ring-2 ring-red-500 rounded-lg" : ""
             }`}
           >
             <input
               type="text"
-              className="bg-slate-800 py-5 rounded-l-xl w-3/5 px-4 text-white ring-0 focus:ring-0 focus:outline-none"
+              className="bg-slate-800 py-5 w-3/5 px-4 text-white ring-0 rounded-l-lg focus:ring-0 focus:outline-none"
               placeholder="Rent"
               onChange={(e) => {
                 setExpense(e.target.value);
@@ -161,7 +165,7 @@ const Logger = () => {
               }}
             />
             <button
-              className="bg-slate-900 py-5 rounded-r-xl w-1/5 flex justify-center"
+              className="bg-slate-900 py-5 w-1/5 flex justify-center rounded-r-lg"
               onClick={handleExpenseSave}
             >
               <svg
