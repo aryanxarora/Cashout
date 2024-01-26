@@ -6,6 +6,9 @@ import { signInWithPopup } from "firebase/auth";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getCookie, setCookie } from "cookies-next";
+import favicon from "@/app/favicon.ico";
+import Image from "next/image";
+import hero from "@/public/hero.png";
 
 const Start = () => {
   const router = useRouter();
@@ -34,21 +37,27 @@ const Start = () => {
     <div>
       <div
         id="screen"
-        className="p-10 font-sans flex flex-col bg-slate-950 min-h-screen h-auto"
+        className="p-10 font-sans flex flex-col bg-slate-950 h-auto"
       >
         <div>
-          <h1 className="text-2xl text-white font-bold my-5">cashout.</h1>
-          <h1 className="text-5xl leading-tight my-10 text-white">
+          <div className="flex items-center gap-10">
+            <Image src={favicon} alt="" width={40} />
+            <h1 className="text-2xl text-white font-bold my-5">
+              cash compass.
+            </h1>
+          </div>
+          <h1 className="text-3xl leading-tight my-10 text-white">
             Income tracking and fund allocation
           </h1>
-          <p className="text-gray-400">
+          <p className="text-gray-400 text-md">
             Streamline your finances with an intuitive app. Easily log income,
             and let Cashout smartly allocate it to categories like allowance,
             savings, and investments.
           </p>
         </div>
-        <Button title="Get Started" handleClick={handleClick} styles="mt-20" />
+        <Button title="Get Started" handleClick={handleClick} styles="mt-10" />
       </div>
+      <Image src={hero} alt="cash compass" className="w-full" />
     </div>
   );
 };

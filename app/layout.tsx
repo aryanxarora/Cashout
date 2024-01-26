@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import StoreProvider from "./StoreProvider";
 
 export const metadata: Metadata = {
-  title: "Cashout",
+  title: "Cash Compass",
   description: "Income tracking and fund allocation",
 };
 

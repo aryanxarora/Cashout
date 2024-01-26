@@ -87,7 +87,7 @@ const Logger = () => {
         {/* INCOME LOGGER */}
         <div>
           <h1 className="text-white mt-10 mb-5 text-lg font-semibold">
-            Income
+            Montly Income
           </h1>
           <div
             className={`flex justify-center items-center ${
@@ -138,7 +138,7 @@ const Logger = () => {
         {/* EXPENSE LOGGER */}
         <div>
           <h1 className="text-white mt-10 mb-5 text-lg font-semibold">
-            Expenses
+            Fixed Expenses
           </h1>
           <div
             className={`flex justify-center items-center ${

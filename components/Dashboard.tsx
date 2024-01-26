@@ -61,7 +61,7 @@ export default function Dashboard() {
           })}
       </h1>
       <h1 className="text-white mt-7 mb-5 text-lg font-semibold">Overview</h1>
-      <div className="w-full bg-slate-900 rounded-xl min-h-72 h-96 p-5 pl-0">
+      <div className="w-full bg-slate-900 rounded-xl min-h-72 h-96 p-5 pl-0 pr-0">
         {data && <DashLineChart data={data} />}
       </div>
       <LogList income={income} />
