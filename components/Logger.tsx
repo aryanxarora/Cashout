@@ -94,28 +94,25 @@ const Logger = () => {
           >
             <input
               type="text"
-              className="bg-slate-800 py-5 rounded-l-xl w-3/5 px-4 text-white ring-0 focus:ring-0 focus:outline-none"
+              className="bg-slate-800 py-5 rounded-l-xl w-3/6 px-4 text-white ring-0 focus:ring-0 focus:outline-none"
               placeholder="Brand Deal"
               onChange={(e) => {
                 setExpense(e.target.value);
                 setExpenseInvalid(false);
               }}
             />
-            <div className="bg-slate-800 py-5 w-2/5 px-4 text-white flex">
-              $
-              <input
-                type="number"
-                className="bg-slate-800 ring-0 focus:ring-0 focus:outline-none"
-                placeholder="2000"
-                min={0}
-                onChange={(e) => {
-                  setExpenseAmount(parseInt(e.target.value));
-                  setExpenseInvalid(false);
-                }}
-              />
-            </div>
+            <input
+              type="number"
+              className="bg-slate-800 ring-0 focus:ring-0 focus:outline-none py-5 w-2/6 px-4 text-white flex"
+              placeholder="2000"
+              min={0}
+              onChange={(e) => {
+                setExpenseAmount(parseInt(e.target.value));
+                setExpenseInvalid(false);
+              }}
+            />
             <button
-              className="bg-slate-900 py-5 rounded-r-xl w-1/5 flex justify-center"
+              className="bg-slate-900 py-5 rounded-r-xl w-1/6 flex justify-center"
               onClick={handleLog}
             >
               <svg
@@ -153,19 +150,16 @@ const Logger = () => {
                 setExpenseInvalid(false);
               }}
             />
-            <div className="bg-slate-800 py-5 w-2/5 px-4 text-white flex">
-              $
-              <input
-                type="number"
-                className="bg-slate-800 ring-0 focus:ring-0 focus:outline-none"
-                placeholder="1300"
-                min={0}
-                onChange={(e) => {
-                  setExpenseAmount(parseInt(e.target.value));
-                  setExpenseInvalid(false);
-                }}
-              />
-            </div>
+            <input
+              type="number"
+              className="bg-slate-800 ring-0 focus:ring-0 focus:outline-none py-5 w-2/5 px-4 text-white flex"
+              placeholder="1300"
+              min={0}
+              onChange={(e) => {
+                setExpenseAmount(parseInt(e.target.value));
+                setExpenseInvalid(false);
+              }}
+            />
             <button
               className="bg-slate-900 py-5 rounded-r-xl w-1/5 flex justify-center"
               onClick={handleExpenseSave}
