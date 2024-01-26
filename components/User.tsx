@@ -15,9 +15,6 @@ export default function User() {
   const [allowance, setAllowance] = useState<number>(0);
   const [savings, setSavings] = useState<number>(0);
   const [investments, setInvestments] = useState<number>(0);
-  const [expense, setExpense] = useState<string>("");
-  const [expenseAmount, setExpenseAmount] = useState<number>(0);
-  const [expenseInvalid, setExpenseInvalid] = useState<boolean>(false);
 
   const handleSignOut = () => {
     deleteCookie("uid");
@@ -41,13 +38,6 @@ export default function User() {
       setAllocationConfig(uid || "", config).then(() => {
         setSave(true);
       });
-    }
-  };
-
-  const handleExpenseSave = () => {
-    if (expense == "" || expenseAmount == 0) {
-      setExpenseInvalid(true);
-    } else {
     }
   };
 
@@ -143,58 +133,6 @@ export default function User() {
           >
             {save ? "Saved!" : "Save"}
           </button>
-        </div>
-        <div>
-          <h1 className="text-white mt-10 mb-5 text-lg font-semibold">
-            Expenses
-          </h1>
-          <div
-            className={`flex justify-center items-center rounded-xl ${
-              expenseInvalid ? "ring-2 ring-red-500" : ""
-            }`}
-          >
-            <input
-              type="text"
-              className="bg-slate-800 py-5 rounded-l-xl w-3/5 px-4 text-white ring-0 focus:ring-0 focus:outline-none"
-              placeholder="Rent"
-              onChange={(e) => {
-                setExpense(e.target.value);
-                setExpenseInvalid(false);
-              }}
-            />
-            <div className="bg-slate-800 py-5 w-2/5 px-4 text-white flex">
-              $
-              <input
-                type="number"
-                className="bg-slate-800 ring-0 focus:ring-0 focus:outline-none"
-                placeholder="1300"
-                min={0}
-                onChange={(e) => {
-                  setExpenseAmount(parseInt(e.target.value));
-                  setExpenseInvalid(false);
-                }}
-              />
-            </div>
-            <button
-              className="bg-slate-900 py-5 rounded-r-xl w-1/5 flex justify-center"
-              onClick={handleExpenseSave}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="w-6 h-6 stroke-red-500"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 4.5v15m7.5-7.5h-15"
-                />
-              </svg>
-            </button>
-          </div>
         </div>
         <Button title="Sign Out" handleClick={handleSignOut} styles="mt-20" />
       </div>
