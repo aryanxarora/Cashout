@@ -35,3 +35,11 @@ input[type="number"] {
 .btn-primary {
   @apply bg-[#B8F535] w-full py-5 rounded-xl font-semibold;
 }
+
+.animate-short {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+.animate-long {
+  @apply transition-all duration-500 ease-in-out;
+}
