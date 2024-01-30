@@ -5,33 +5,34 @@ import { useEffect, useState } from "react";
 import { getUserData, addNewUser } from "@/app/firebase/functions";
 import { BudgetState } from "@/types";
 
-export default function Dashboard() {
-  const [data, setData] = useState<BudgetState>();
-  const [income, setIncome] = useState([]);
+export default function Dashboard({ data }: { data: BudgetState }) {
+  const income = data.income;
+  // const [data, setData] = useState<BudgetState>();
+  // const [income, setIncome] = useState([]);
 
-  useEffect(() => {
-    const uid = getCookie("uid");
-    const dataHandler = async () => {
-      const data = await getUserData(uid || "");
-      if (data !== null) {
-        setData(data as BudgetState);
-        setIncome(data.income);
-        return !null;
-      } else {
-        return null;
-      }
-    };
+  // useEffect(() => {
+  //   const uid = getCookie("uid");
+  //   const dataHandler = async () => {
+  //     const data = await getUserData(uid || "");
+  //     if (data !== null) {
+  //       setData(data as BudgetState);
+  //       setIncome(data.income);
+  //       return !null;
+  //     } else {
+  //       return null;
+  //     }
+  //   };
 
-    dataHandler().then((data) => {
-      if (data === null) {
-        addNewUser(uid || "").then(() => {
-          getUserData(uid || "").then((data) => {
-            setData(data as BudgetState);
-          });
-        });
-      }
-    });
-  }, []);
+  //   dataHandler().then((data) => {
+  //     if (data === null) {
+  //       addNewUser(uid || "").then(() => {
+  //         getUserData(uid || "").then((data) => {
+  //           setData(data as BudgetState);
+  //         });
+  //       });
+  //     }
+  //   });
+  // }, []);
 
   return (
     <div id="container" className="p-5">

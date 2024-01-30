@@ -1,89 +1,87 @@
 import { Button } from "@/components";
-import { useState } from "react";
-import { Income } from "@/types";
+import { useEffect, useState } from "react";
+import { BudgetState, Income, expenses } from "@/types";
 import { Timestamp } from "firebase/firestore";
 import { getCookie } from "cookies-next";
-import { newIncomeLog } from "@/app/firebase/functions";
+import {
+  addExpenseConfig,
+  getUserData,
+  newIncomeLog,
+} from "@/app/firebase/functions";
+import { set } from "firebase/database";
 
-const Logger = () => {
-  const [amount, setAmount] = useState(0);
-  const [source, setSource] = useState("");
-  const [status, setStatus] = useState(0);
-  const [incomeInvalid, setIncomeInvalid] = useState<boolean>(false);
-  const [expenseAmount, setExpenseAmount] = useState<number>(0);
-  const [expenseInvalid, setExpenseInvalid] = useState<boolean>(false);
-  const [expense, setExpense] = useState<string>("");
+const Logger = ({ data }: { data: BudgetState }) => {
+  // const [data, setData] = useState<BudgetState>();
+  const [income, setIncome] = useState({
+    source: "",
+    amount: 0,
+    valid: 0, // 0 = netural, 1 = success, 2 = error
+  });
 
-  const handleLog = () => {
-    if (amount == 0 || source == "") {
-      setStatus(2);
+  const [expense, setExpense] = useState({
+    source: "",
+    amount: 0,
+    valid: 0,
+  });
+
+  const handleIncomeSubmit = () => {
+    if (income.source === "" || income.amount === 0) {
+      setIncome({ ...income, valid: 2 });
     } else {
       const log: Income = {
-        amount: amount,
-        source: source,
+        source: income.source,
+        amount: parseInt(income.amount.toString()),
         date: Timestamp.now(),
       };
       const uid = getCookie("uid");
       newIncomeLog(uid || "", log)
         .then(() => {
-          setStatus(1);
+          setIncome({
+            ...income,
+            valid: 1,
+          });
         })
-        .catch(() => {
-          setStatus(2);
+        .catch((err) => {
+          console.log(err);
         });
     }
   };
 
-  const handleExpenseSave = () => {
-    if (expense == "" || expenseAmount == 0) {
-      setExpenseInvalid(true);
+  const handleExpenseSubmit = () => {
+    if (expense.source === "" || expense.amount === 0) {
+      setExpense({ ...expense, valid: 2 });
     } else {
+      const config: expenses = {
+        name: expense.source,
+        amount: parseInt(expense.amount.toString()),
+      };
+      const uid = getCookie("uid");
+      addExpenseConfig(uid || "", config)
+        .then(() => {
+          setExpense({
+            ...expense,
+            valid: 1,
+          });
+          data?.config.expenses.push(config);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
+
+  // useEffect(() => {
+  //   const uid = getCookie("uid");
+  //   getUserData(uid || "").then((data) => {
+  //     setData(data as BudgetState);
+  //   });
+  // }, []);
 
   return (
     <main id="screen" className="bg-slate-950 relative font-head">
       <div id="container" className="p-5">
         <h1 className="text-sm text-slate-500">Monthly Income</h1>
         <h1 className="text-2xl text-white">Log Cash In</h1>
-
-        {status == 0 ? (
-          <h1></h1>
-        ) : status == 1 ? (
-          <h1 className="rounded-xl border-2 border-lime-500 mt-10 py-4 px-3 w-full text-lime-500">
-            Income Log Successful!
-          </h1>
-        ) : (
-          <h1 className="rounded-xl border-2 border-red-500 mt-10 py-4 px-3 w-full text-red-500">
-            Error! Unable to log income.
-          </h1>
-        )}
-        {/*
-        <h1 className="text-white mt-10 mb-4">Amount</h1>
-        <div className="bg-slate-800 flex justify-center items-center py-5 px-5 rounded-xl text-lg text-white border-0">
-          <h1 className="mr-5">$</h1>
-          <input
-            type="number"
-            className="w-full bg-slate-800  text-white ring-0 focus:ring-0 focus:outline-none"
-            placeholder="2000"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-          />
-        </div>
-        <h1 className="text-white mt-10 mb-4">Source</h1>
-        <input
-          type="text"
-          className="w-full text-white bg-slate-800 py-5 px-5 rounded-xl ring-0 focus:ring-0 focus:outline-none"
-          placeholder="Brand Deal"
-          value={source}
-          onChange={(e) => setSource(e.target.value)}
-        />
-        <button
-          className="bg-slate-800 text-white w-full rounded-xl py-3 mt-5"
-          onClick={handleLog}
-        >
-          Log
-        </button> */}
         {/* INCOME LOGGER */}
         <div>
           <h1 className="text-white mt-10 mb-5 text-lg font-semibold">
@@ -91,31 +89,46 @@ const Logger = () => {
           </h1>
           <div
             className={`flex justify-center items-center ${
-              expenseInvalid ? "ring-2 ring-red-500 rounded-lg" : ""
+              income.valid === 2
+                ? "ring-2 ring-red-500 rounded-lg"
+                : income.valid === 1
+                ? "ring-2 ring-lime-500 rounded-lg"
+                : ""
             }`}
           >
             <input
               type="text"
-              className="bg-slate-800 py-5 w-3/6 px-4 rounded-l-lg text-white ring-0 focus:ring-0 focus:outline-none"
-              placeholder="Brand Deal"
+              className="bg-slate-800 py-5 w-3/6 px-4 text-white ring-0 focus:ring-0 focus:outline-none"
+              placeholder="Source"
+              style={{ borderRadius: "0.5rem 0 0 0.5rem" }}
+              name="source"
+              autoComplete="off"
               onChange={(e) => {
-                setSource(e.target.value);
-                setIncomeInvalid(false);
+                setIncome({
+                  ...income,
+                  [e.target.name]: e.target.value,
+                  valid: 0,
+                });
               }}
             />
             <input
               type="number"
-              className="bg-slate-800 ring-0 focus:ring-0 focus:outline-none py-5 w-2/6 px-4 text-white flex"
+              className="bg-slate-800 ring-0 focus:ring-0 focus:outline-none rounded-none py-5 w-2/6 px-4 text-white flex"
               placeholder="2000"
               min={0}
+              name="amount"
+              autoComplete="off"
               onChange={(e) => {
-                setAmount(parseInt(e.target.value));
-                setIncomeInvalid(false);
+                setIncome({
+                  ...income,
+                  [e.target.name]: e.target.value,
+                  valid: 0,
+                });
               }}
             />
             <button
               className="bg-slate-900 py-5 w-1/6 flex justify-center rounded-r-lg"
-              onClick={handleLog}
+              onClick={handleIncomeSubmit}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -142,31 +155,46 @@ const Logger = () => {
           </h1>
           <div
             className={`flex justify-center items-center ${
-              expenseInvalid ? "ring-2 ring-red-500 rounded-lg" : ""
+              expense.valid === 2
+                ? "ring-2 ring-red-500 rounded-lg"
+                : expense.valid === 1
+                ? "ring-2 ring-lime-500 rounded-lg"
+                : ""
             }`}
           >
             <input
               type="text"
-              className="bg-slate-800 py-5 w-3/5 px-4 text-white ring-0 rounded-l-lg focus:ring-0 focus:outline-none"
-              placeholder="Rent"
+              className="bg-slate-800 py-5 w-3/6 px-4 text-white ring-0 focus:ring-0 focus:outline-none"
+              placeholder="Expense"
+              style={{ borderRadius: "0.5rem 0 0 0.5rem" }}
+              name="source"
+              autoComplete="off"
               onChange={(e) => {
-                setExpense(e.target.value);
-                setExpenseInvalid(false);
+                setExpense({
+                  ...expense,
+                  [e.target.name]: e.target.value,
+                  valid: 0,
+                });
               }}
             />
             <input
               type="number"
-              className="bg-slate-800 ring-0 focus:ring-0 focus:outline-none py-5 w-2/5 px-4 text-white flex"
-              placeholder="1300"
+              className="bg-slate-800 ring-0 focus:ring-0 focus:outline-none rounded-none py-5 w-2/6 px-4 text-white flex"
+              placeholder="1400"
               min={0}
+              name="amount"
+              autoComplete="off"
               onChange={(e) => {
-                setExpenseAmount(parseInt(e.target.value));
-                setExpenseInvalid(false);
+                setExpense({
+                  ...expense,
+                  [e.target.name]: e.target.value,
+                  valid: 0,
+                });
               }}
             />
             <button
-              className="bg-slate-900 py-5 w-1/5 flex justify-center rounded-r-lg"
-              onClick={handleExpenseSave}
+              className="bg-slate-900 py-5 w-1/6 flex justify-center rounded-r-lg"
+              onClick={handleExpenseSubmit}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -184,6 +212,23 @@ const Logger = () => {
               </svg>
             </button>
           </div>
+        </div>
+
+        {/* EXPENSE LIST */}
+        <div>
+          {data && data.config.expenses.length > 0 ? (
+            <div className="mt-10">
+              {data.config.expenses.map((item, index) => (
+                <div
+                  key={index}
+                  className="text-white flex w-full bg-slate-900 justify-between p-5 rounded-xl mt-3 items-center"
+                >
+                  <h1 className="text-white">{item.name}</h1>
+                  <h1 className="text-red-500">${item.amount.toFixed(2)}</h1>
+                </div>
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
     </main>
