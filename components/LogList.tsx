@@ -2,14 +2,19 @@ import { Income } from "@/types";
 import React from "react";
 
 const LogList = ({ income }: { income: Income[] }) => {
+  const sortedIncome = [...income].sort(
+    (a: Income, b: Income) =>
+      b.date.toDate().getTime() - a.date.toDate().getTime()
+  );
+
   return (
     <div>
-      {income.length === 0 ? null : (
+      {sortedIncome.length === 0 ? null : (
         <h1 className="text-white mt-10 mb-5 text-lg font-semibold">
           This Month
         </h1>
       )}
-      {income
+      {sortedIncome
         .sort(
           (a: Income, b: Income) =>
             b.date.toDate().getTime() - a.date.toDate().getTime()

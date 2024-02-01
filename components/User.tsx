@@ -2,19 +2,28 @@
 import { deleteCookie, getCookie } from "cookies-next";
 import { Button } from "@/components";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { getUserData, setAllocationConfig } from "@/app/firebase/functions";
+import { useState } from "react";
+import { setAllocationConfig } from "@/app/firebase/functions";
 import { Allocation, BudgetState } from "@/types";
-import { set } from "firebase/database";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setAllocation } from "@/lib/slices/budgetSlice";
 
 export default function User() {
   const router = useRouter();
-  const [data, setData] = useState<BudgetState>();
+  const data: BudgetState = useAppSelector((state) => state.budget);
+  const dispatch = useAppDispatch();
+
   const [invalid, setInvalid] = useState<boolean>(false);
   const [save, setSave] = useState<boolean>(false);
-  const [allowance, setAllowance] = useState<number>(0);
-  const [savings, setSavings] = useState<number>(0);
-  const [investments, setInvestments] = useState<number>(0);
+  const [allowance, setAllowance] = useState<number>(
+    data.config.allocation.allowance
+  );
+  const [savings, setSavings] = useState<number>(
+    data.config.allocation.savings
+  );
+  const [investments, setInvestments] = useState<number>(
+    data.config.allocation.investments
+  );
 
   const handleSignOut = () => {
     deleteCookie("uid");
@@ -37,24 +46,10 @@ export default function User() {
       const uid = getCookie("uid");
       setAllocationConfig(uid || "", config).then(() => {
         setSave(true);
+        dispatch(setAllocation(config));
       });
     }
   };
-
-  useEffect(() => {
-    const uid = getCookie("uid");
-    getUserData(uid || "")
-      .then((data) => {
-        console.log(data);
-        setData(data as BudgetState);
-        setAllowance(data?.config.allocation.allowance || 0);
-        setSavings(data?.config.allocation.savings || 0);
-        setInvestments(data?.config.allocation.investments || 0);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
 
   return (
     <main id="screen" className="bg-slate-950 relative font-head">

@@ -1,4 +1,3 @@
-import { Button } from "@/components";
 import { useEffect, useState } from "react";
 import { BudgetState, Income, expenses } from "@/types";
 import { Timestamp } from "firebase/firestore";
@@ -8,10 +7,12 @@ import {
   getUserData,
   newIncomeLog,
 } from "@/app/firebase/functions";
-import { set } from "firebase/database";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { addExpense, addIncome } from "@/lib/slices/budgetSlice";
 
-const Logger = ({ data }: { data: BudgetState }) => {
-  // const [data, setData] = useState<BudgetState>();
+const Logger = () => {
+  const data: BudgetState = useAppSelector((state) => state.budget);
+  const dispatch = useAppDispatch();
   const [income, setIncome] = useState({
     source: "",
     amount: 0,
@@ -40,10 +41,12 @@ const Logger = ({ data }: { data: BudgetState }) => {
             ...income,
             valid: 1,
           });
+          dispatch(addIncome(log));
         })
         .catch((err) => {
           console.log(err);
         });
+      // Add dispatch here
     }
   };
 
@@ -67,6 +70,7 @@ const Logger = ({ data }: { data: BudgetState }) => {
         .catch((err) => {
           console.log(err);
         });
+      dispatch(addExpense(config));
     }
   };
 

@@ -12,9 +12,13 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { addNewUser, getUserData } from "./firebase/functions";
 import { BudgetState } from "@/types";
+import { setBudget } from "@/lib/slices/budgetSlice";
+import { useAppDispatch } from "@/lib/hooks";
 
 export default function Home() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+
   const [data, setData] = useState<BudgetState>();
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -37,6 +41,7 @@ export default function Home() {
       const data = await getUserData(uid || "");
       if (data !== null) {
         setData(data as BudgetState);
+        dispatch(setBudget(data as BudgetState));
         return !null;
       } else {
         return null;
@@ -52,7 +57,7 @@ export default function Home() {
         });
       }
     });
-  }, []);
+  }, [dispatch]);
 
   if (!data) return null;
   return (
@@ -62,13 +67,13 @@ export default function Home() {
       ) : (
         <div>
           {nav === "home" ? (
-            <Dashboard data={data} />
+            <Dashboard />
           ) : nav === "budget" ? (
             <Budget />
           ) : nav == "user" ? (
             <User />
           ) : (
-            <Logger data={data} />
+            <Logger />
           )}
           <div className="w-full h-16"></div>
           <Navigation handleNav={handleNav} />

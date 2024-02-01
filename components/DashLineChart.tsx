@@ -21,25 +21,22 @@ const DashboardChart = ({ data }: { data: BudgetState }) => {
   const [chartData, setChartData] = useState<History[]>([]);
 
   useEffect(() => {
-    data.history.forEach((item) => {
-      item.total = item.income.reduce((acc: number, curr: Income) => {
-        return (acc += curr.amount);
-      }, 0);
-    });
+    const updatedHistory = data.history.map((item) => ({
+      ...item, // spread the existing properties
+      total: item.income.reduce((acc, curr) => acc + curr.amount, 0), // calculate the new total
+    }));
 
-    const currentData: History = {
+    const currentData = {
       date: Timestamp.now(),
       income: data.income,
       allowance: 100,
       savings: 200,
       investments: 300,
-      total: data.income.reduce((acc: number, curr: Income) => {
-        return (acc += curr.amount);
-      }, 0),
+      total: data.income.reduce((acc, curr) => acc + curr.amount, 0),
     };
 
-    setChartData([...data.history, currentData]);
-  }, []);
+    setChartData([...updatedHistory, currentData]);
+  }, [data.history, data.income]); // Make sure to include all dependencies in this array
 
   return (
     <ResponsiveContainer

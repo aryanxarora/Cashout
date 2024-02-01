@@ -4,10 +4,11 @@ import { DashLineChart, LogList } from "@/components";
 import { useEffect, useState } from "react";
 import { getUserData, addNewUser } from "@/app/firebase/functions";
 import { BudgetState } from "@/types";
+import { useAppSelector } from "@/lib/hooks";
 
-export default function Dashboard({ data }: { data: BudgetState }) {
+export default function Dashboard() {
+  const data: BudgetState = useAppSelector((state) => state.budget);
   const income = data.income;
-  // const [data, setData] = useState<BudgetState>();
   // const [income, setIncome] = useState([]);
 
   // useEffect(() => {
