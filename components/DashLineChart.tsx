@@ -26,17 +26,29 @@ const DashboardChart = ({ data }: { data: BudgetState }) => {
       total: item.income.reduce((acc, curr) => acc + curr.amount, 0), // calculate the new total
     }));
 
+    const totalExpenses = data.config.expenses.reduce(
+      (acc, curr) => acc + curr.amount,
+      0
+    );
+
+    const totalIncome = data.income.reduce((acc, curr) => acc + curr.amount, 0);
+
     const currentData = {
       date: Timestamp.now(),
+      total: totalIncome,
       income: data.income,
-      allowance: 100,
-      savings: 200,
-      investments: 300,
-      total: data.income.reduce((acc, curr) => acc + curr.amount, 0),
+      allowance:
+        (totalIncome - totalExpenses) *
+        (data.config.allocation.allowance / 100),
+      savings:
+        (totalIncome - totalExpenses) * (data.config.allocation.savings / 100),
+      investments:
+        (totalIncome - totalExpenses) *
+        (data.config.allocation.investments / 100),
     };
 
     setChartData([...updatedHistory, currentData]);
-  }, [data.history, data.income]); // Make sure to include all dependencies in this array
+  }, [data.history, data.income]);
 
   return (
     <ResponsiveContainer
@@ -70,7 +82,6 @@ const DashboardChart = ({ data }: { data: BudgetState }) => {
                   </div>
                 );
               }
-
               return null;
             }}
           />

@@ -47,9 +47,10 @@ export const budgetSlice = createSlice({
     },
     setAllocation: (state, action: PayloadAction<Allocation>) => {
       state.config.allocation = action.payload;
-    }
+    },
   },
 });
 
-export const { setBudget, addIncome, addExpense, setAllocation } = budgetSlice.actions;
+export const { setBudget, addIncome, addExpense, setAllocation } =
+  budgetSlice.actions;
 export default budgetSlice.reducer;

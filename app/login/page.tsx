@@ -56,7 +56,7 @@ const Start = () => {
             className="rounded-full px-4 py-2 font-semibold bg-lime-500 hover:bg-opacity-90 animtate-smooth flex items-center group"
             onClick={handleLogin}
           >
-            <span className="mr-2">Get Started</span>
+            <span className="mr-2">Sign in with Google</span>
             <svg
               className="stroke-current"
               width="10"
