@@ -14,6 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <link rel="manifest" href="/public/manifest.json" />
       <body suppressHydrationWarning={true}>
         {/* <Navbar /> */}
         <div className="hidden sm:block">
