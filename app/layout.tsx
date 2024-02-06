@@ -5,6 +5,7 @@ import StoreProvider from "./StoreProvider";
 export const metadata: Metadata = {
   title: "Cash Compass",
   description: "Income tracking and fund allocation",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
@@ -14,7 +15,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <link rel="manifest" href="/public/manifest.json" />
       <body suppressHydrationWarning={true}>
         {/* <Navbar /> */}
         <div className="hidden sm:block">

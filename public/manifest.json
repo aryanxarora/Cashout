@@ -1,29 +1,21 @@
 {
+  "id": "cashout",
+  "name": "Cashout – Income tracker",
+  "short_name": "Cashout",
   "background_color": "#020617",
   "description": "Income tracking and fund allocation",
-  "dir": "ltr",
   "display": "standalone",
-  "name": "Cashout",
   "orientation": "portrait",
-  "scope": "/",
-  "short_name": "Cashout",
+  "scope": ".",
   "start_url": "/",
   "theme_color": "#77b916",
+  "lang": "en",
   "icons": [
     {
       "src": "/cashout.png",
       "type": "image/png",
       "sizes": "563x563"
     }
-  ],
-  "id": "cashout",
-  "lang": "en",
-  "display_override": [
-    "standalone",
-    "fullscreen",
-    "window-controls-overlay",
-    "minimal-ui",
-    "browser"
   ],
   "categories": [
     "finance"
