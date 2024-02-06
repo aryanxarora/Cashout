@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Cash Compass",
   description: "Income tracking and fund allocation",
   manifest: "/manifest.json",
+  themeColor: "#020617",
 };
 
 export default function RootLayout({
