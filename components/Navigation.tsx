@@ -6,7 +6,7 @@ const Navigation = ({ handleNav }: { handleNav: any }) => {
   const [active, setActive] = useState(getCookie("nav") || "home");
 
   return (
-    <div className="flex w-full justify-around items-center bottom-0 fixed bg-slate-900 py-5 shadow-xl">
+    <div className="flex w-full justify-around items-center bottom-0 fixed bg-slate-900 pt-5 pb-10 shadow-xl">
       <button
         disabled={active === "home"}
         onClick={() => {
