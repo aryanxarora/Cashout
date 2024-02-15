@@ -8,6 +8,7 @@ import Loading from "./Loading";
 import DashAreaChart from "./DashAreaChart";
 import Logger from "./Logger";
 import LogList from "./LogList";
+import Desktop from "./Desktop";
 
 export {
   Button,
@@ -20,4 +21,5 @@ export {
   DashAreaChart,
   Logger,
   LogList,
+  Desktop
 };
