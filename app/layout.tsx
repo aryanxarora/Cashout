@@ -21,7 +21,7 @@ export default function RootLayout({
         {/* <Navbar /> */}
         <div className="hidden sm:block">
           <div className="bg-slate-950">
-            <div className="">
+            <div className="flex flex-col justify-center items-center">
               <div id="screen" className="p-10 font-sans flex flex-col  h-auto">
                 <div>
                   <div className="flex items-center justify-center gap-10">
@@ -69,7 +69,7 @@ export default function RootLayout({
                 </div>
               </div>
               <img
-                src="https://raw.githubusercontent.com/aryanxarora/Cashout/main/public/hero.png"
+                src="https://raw.githubusercontent.com/aryanxarora/Cashout/main/public/Random%20Graphics.png"
                 alt="cash compass"
                 className="w-1/2"
               />
